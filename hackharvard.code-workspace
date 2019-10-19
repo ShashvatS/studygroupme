@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "/home/shashvat/Documents/HappyHome"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/*.js.map": true
+		}
+	}
+}

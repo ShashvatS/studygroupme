@@ -19,6 +19,9 @@ var router = express.Router();
 //     console.log(req);
 //     next();
 // });
+router.get('/scrapecanvas.js', function (req, res) {
+    res.sendFile(path.join(__dirname, '..', 'views', 'scrapecanvas.js'));
+});
 router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '..', 'views', 'index.html'));
 });

@@ -23,6 +23,10 @@ const router = express.Router();
 //     next();
 // });
 
+router.get('/scrapecanvas.js', (req: express.Request, res: express.Response) => {
+    res.sendFile(path.join(__dirname, '..', 'views', 'scrapecanvas.js'));
+});
+
 router.get('/', (req: express.Request, res: express.Response) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'index.html'));
 });

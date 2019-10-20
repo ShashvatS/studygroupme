@@ -1,1 +1,1 @@
-export const serveModules = ["jquery"];
+export const serveModules = ["jquery", "clipboard"];

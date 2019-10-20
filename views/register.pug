@@ -1,5 +1,8 @@
 doctype html
 head
+  script(src="clipboard/dist/clipboard.min.js")
+
+body
 h1 Register
 p
   | This app is not official yet, and we cannot access data from actual Harvard databases.
@@ -9,7 +12,10 @@ p
 br
 a(href=url) continue
 br
-p
+br
+button(class="copybtn" data-clipboard-target="#copy") COPY!
+br
+p(id="copy")
   | const data = {
   | username: #{username},
   | courses: [],
@@ -92,3 +98,4 @@ p
   | }
   | allCoursesWindow.close();
   | };
+script(src="copy.js")

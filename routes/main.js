@@ -82,5 +82,8 @@ router.post('/test', function (req, res) {
         res: true
     });
 });
+router.get('/main', function (req, res) {
+    res.sendFile(path.join(__dirname, '..', 'views', 'main.html'));
+});
 exports.default = router;
 //# sourceMappingURL=main.js.map

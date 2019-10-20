@@ -92,4 +92,8 @@ router.post('/test', (req: express.Request, res: express.Response) => {
     });
 });
 
+router.get('/main', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'views', 'main.html'));
+});
+
 export default router;

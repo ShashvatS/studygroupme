@@ -1,4 +1,4 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.serveModules = ["jquery"];
+exports.serveModules = ["jquery", "clipboard"];
 //# sourceMappingURL=constants.js.map

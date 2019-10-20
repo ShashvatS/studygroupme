@@ -18,11 +18,12 @@ async function postData(data) {
   }
 
 function sendDataToServer() {
-    let x = {
-       data: data
-    };
+    // let x = {
+    //    data: data
+    // };
 
-    postData(x);
+    // postData(x);
+    console.log(data);
 }
 
 const allCoursesWindow = window.open("/courses");

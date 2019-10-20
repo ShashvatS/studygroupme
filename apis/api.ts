@@ -70,8 +70,6 @@ router.post('/register', (req: express.Request, res: express.Response) => {
             console.log('calendar created: %s', event);
             share.calendar[course] = event.data.id;
         });
-
-
     }
 
     if (req.body) {

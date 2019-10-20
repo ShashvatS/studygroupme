@@ -14,6 +14,9 @@ import mainRoutes from './routes/main';
 import api from "./apis/api";
 import admin from "./routes/admin";
 
+import _email2name from "./constants/email2name";
+import _name2email from "./constants/name2email";
+
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 

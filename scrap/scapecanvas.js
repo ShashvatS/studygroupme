@@ -3,7 +3,7 @@ const data = {
     people: {}
 }
 
-async function postData(url = '', data) {
+async function postData(url, data) {
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -13,13 +13,18 @@ async function postData(url = '', data) {
       },
       redirect: 'follow', // manual, *follow, error
       referrer: 'no-referrer', // no-referrer, *client
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
+      body: data // body data type must match "Content-Type" header
     });
     return await response
   }
 
 function sendDataToServer() {
-    postData("https://studygroupme.herokuapp.com/register", {data: data});
+    let x = {
+        y: 32,
+        abc: 1235
+    };
+
+    postData("https://studygroupme.herokuapp.com/register", x);
 }
 
 const allCoursesWindow = window.open("/courses");

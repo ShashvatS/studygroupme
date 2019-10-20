@@ -3,30 +3,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var express = require("express");
 var http = require("http");
+var cors = require('cors');
 var path = require("path");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 // import cors = require("cors");
 var main_1 = require("./routes/main");
+var api_1 = require("./apis/api");
 var app = express();
 var server = http.createServer(app);
+app.use(cors());
+console.log("helloworld");
 var constants_1 = require("./constants");
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(function (_req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
+// app.use(function (_req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, X-Auth-Token");
+//     next();
+// });
 for (var _i = 0, serveModules_1 = constants_1.serveModules; _i < serveModules_1.length; _i++) {
     var theModule = serveModules_1[_i];
     app.use("/" + theModule, express.static(path.join(__dirname, "node_modules", theModule)));
 }
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/', main_1.default);
+app.use('/', api_1.default);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

@@ -5,4 +5,5 @@ var router = express.Router();
 router.post('/register', function (req, res) {
     console.log(req.body.data);
 });
+exports.default = router;
 //# sourceMappingURL=api.js.map

@@ -16,6 +16,8 @@ import api from "./apis/api";
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 
+app.use(cors());
+
 import { serveModules } from "./constants";
 
 app.set('views', path.join(__dirname, 'views'));
@@ -30,8 +32,6 @@ app.use(cookieParser());
 //     res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, X-Auth-Token");
 //     next();
 // });
-
-app.use(cors());
 
 for (let theModule of serveModules) {
     app.use("/" + theModule, express.static(path.join(__dirname, "node_modules", theModule)));

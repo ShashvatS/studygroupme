@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
-var google = require("google-auth-library");
-var googleapis_1 = require("googleapis");
-var calendar = googleapis_1.google.calendar('v3');
+var path = require("path");
+var share_1 = require("../share");
 var router = express.Router();
 // router.get('/*', (req: express.Request, res: express.Response, next) => {
 //     res.cookie("testing cookie", "hello world");
@@ -20,89 +19,62 @@ var router = express.Router();
 //     console.log(req);
 //     next();
 // });
-var api_key = JSON.parse(process.env.calendar_api_key);
-var client = new google.JWT(api_key.client_email, null, api_key.private_key, ['https://www.googleapis.com/auth/calendar']);
-router.get('/test2', function (req, res) {
-    calendar.calendarList.list({
-        auth: client
-    }, function (err, list) {
-        console.log(list);
-    });
-    // let event = {
-    //     'summary': 'Google I/O 2015',
-    //     'location': '800 Howard St., San Francisco, CA 94103',
-    //     'description': 'A chance to hear more about Google\'s developer products.',
-    //     'start': {
-    //       'dateTime': '2015-05-28T09:00:00-07:00',
-    //       'timeZone': 'America/Los_Angeles',
-    //     },
-    //     'end': {
-    //       'dateTime': '2015-05-28T17:00:00-07:00',
-    //       'timeZone': 'America/Los_Angeles',
-    //     },
-    //     'recurrence': [
-    //       'RRULE:FREQ=DAILY;COUNT=2'
-    //     ],
-    //     'attendees': [
-    //       {'email': 'lpage@example.com'},
-    //       {'email': 'sbrin@example.com'},
-    //     ],
-    //     'reminders': {
-    //       'useDefault': false,
-    //       'overrides': [
-    //         {'method': 'email', 'minutes': 24 * 60},
-    //         {'method': 'popup', 'minutes': 10},
-    //       ],
-    //     },
-    //   };
-    var event = {
-        'start': {
-            'dateTime': '2019-10-28T09:00:00-07:00',
-            'timeZone': 'America/Los_Angeles',
-        },
-        'end': {
-            'dateTime': '2019-10-28T17:00:00-07:00',
-            'timeZone': 'America/Los_Angeles',
-        },
-        'htmlLink': "https://google.com"
-    };
-    calendar.events.insert({
-        auth: client,
-        calendarId: 'studygroupme@gmail.com',
-        requestBody: event
-    }, function (err, event) {
-        if (err) {
-            console.log('There was an error contacting the Calendar service: ' + err);
-            return;
-        }
-        console.log('Event created: %s', event.htmlLink);
-    });
-    calendar.calendars.insert({
-        auth: client,
-        requestBody: {
-            summary: "randomtest"
-        },
-    }, function (err, event) {
-        if (err) {
-            console.log('There was an error contacting the Calendar service: ' + err);
-            return;
-        }
-        calendar.acl.insert({
-            auth: client,
-            calendarId: event.data.id,
-            requestBody: {
-                "scope": {
-                    "type": "default"
-                },
-                "role": "reader"
-            }
-        });
-        console.log(event.data.id);
-        console.log('calendar created: %s', event);
-    });
-    res.json({
-        res: true
-    });
+router.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '..', 'views', 'index.html'));
+});
+router.get('/login', function (req, res) {
+    // console.log(req.originalUrl);
+    // console.log(req.query.url);
+    // res.sendFile(path.join(__dirname, '..', 'views', 'login.html'));
+    if (req.query.url == null) {
+        req.query.url = "/";
+    }
+    var url = "/login?url=" + encodeURIComponent(req.query.url);
+    res.render('login', { url: url });
+});
+router.post('/login', function (req, res) {
+    console.log("I am over here!\n");
+    if (req.body.username) {
+        res.cookie("username", req.body.username, { maxAge: 900000, httpOnly: true });
+        if (req.query.url)
+            res.redirect(req.query.url);
+        else
+            res.redirect("/");
+    }
+    else {
+        res.redirect(req.url);
+    }
+});
+router.get('/register', function (req, res) {
+    if (req.query.url == null) {
+        req.query.url = "/";
+    }
+    res.render('register', { username: req.cookies.username, url: req.query.url });
+});
+router.get('*', function (req, res, next) {
+    if (req.cookies.username) {
+        next();
+    }
+    else {
+        var string = encodeURIComponent(req.url);
+        res.redirect('/login?url=' + string);
+    }
+});
+router.get('*', function (req, res, next) {
+    if (req.cookies.registered) {
+        next();
+    }
+    else if (share_1.default.users[req.cookies.username] != null) {
+        res.cookie("registered", true, { maxAge: 900000, httpOnly: true });
+        next();
+    }
+    else {
+        var string = encodeURIComponent(req.url);
+        res.redirect('/register?url=' + string);
+    }
+});
+router.get("/endpoint", function (req, res) {
+    res.sendFile(path.join(__dirname, '..', 'views', 'endpoint.html'));
 });
 router.post('/test', function (req, res) {
     console.log(req.body);

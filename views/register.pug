@@ -1,0 +1,94 @@
+doctype html
+head
+h1 Register
+p
+  | This app is not official yet, and we cannot access data from actual Harvard databases.
+  | Please help us out by excuting this javascript code on 
+  a(href='https://canvas.harvard.edu') canvas
+  | .
+br
+a(href=url) continue
+br
+p
+  | const data = {
+  | username: #{username},
+  | courses: [],
+  | people: {}
+  | }
+  | async function postData(data) {
+  | // Default options are marked with *
+  | const response = await fetch(&quot;https://studygroupme.herokuapp.com/register&quot;, {
+  | method: &apos;POST&apos;, // *GET, POST, PUT, DELETE, etc.
+  | mode: &apos;cors&apos;, // no-cors, *cors, same-origin
+  | headers: {
+  | &apos;Content-Type&apos;: &apos;application/json&apos;
+  | },
+  | redirect: &apos;follow&apos;, // manual, *follow, error
+  | referrer: &apos;no-referrer&apos;, // no-referrer, *client
+  | body: JSON.stringify(data) // body data type must match &quot;Content-Type&quot; header
+  | });
+  | return await response
+  | }
+  | function sendDataToServer() {
+  | let x = {
+  | data: data
+  | };
+  | postData(x);
+  | }
+  | const allCoursesWindow = window.open(&quot;/courses&quot;);
+  | allCoursesWindow.onload = () =&gt; {
+  | let courses = allCoursesWindow.document.getElementsByClassName(&quot;course-list-table-row&quot;);
+  | let numCourses = 0;
+  | for (let course of courses) {
+  | let courseLink = course.getElementsByTagName(&quot;a&quot;);
+  | let title = courseLink[0].title;
+  | if (title == null) continue;
+  | data.courses.push(title);
+  | numCourses += 1;
+  | }
+  | let numDataCollected = 0;
+  | for (let i = 0; i &lt; data.courses.length; ++i) {
+  | let course = courses[i];
+  | let courseLink = course.getElementsByTagName(&quot;a&quot;);
+  | let link = courseLink[0].href;
+  | if (link == null) continue;
+  | let courseWindow = window.open(link);
+  | courseWindow.onload = () =&gt; {
+  | let links = courseWindow.document.getElementsByTagName(&quot;a&quot;);
+  | links = Array.from(links);
+  | links = links.filter(link =&gt; link.title == &quot;People&quot;);
+  | if (links.length &gt; 0) {
+  | let peopleWindow = window.open(links[0].href);
+  | peopleWindow.onload = () =&gt; {
+  | const target = peopleWindow.document.getElementsByClassName(&quot;v-gutter&quot;)[0];
+  | const config = {
+  | attributes: true,
+  | childList: true,
+  | subtree: true,
+  | characterData: true
+  | };
+  | let observer = new MutationObserver(function (mutations) {
+  | let list = peopleWindow.document.getElementsByClassName(&quot;roster_user_name&quot;);
+  | list = Array.from(list).map(link =&gt; link.innerText);
+  | data.people[data.courses[i]] = list;
+  | numDataCollected += 1;
+  | peopleWindow.close();
+  | if (numDataCollected == numCourses) {
+  | sendDataToServer();
+  | }
+  | });
+  | observer.observe(target, config);
+  | };
+  | }
+  | else {
+  | data.people[data.courses[i]] = [];
+  | numDataCollected += 1;
+  | if (numDataCollected == numCourses) {
+  | sendDataToServer();
+  | }
+  | }
+  | courseWindow.close();
+  | };
+  | }
+  | allCoursesWindow.close();
+  | };

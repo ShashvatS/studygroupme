@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <button onclick="fakescrape()">Click me... duh</button>
+
+    <script>
+        const data = {
+            username: "shashvat",
+            courses: [],
+            people: {}
+        };
+
+        let courses = ["class1", "class2", "class3"];
+        let people = ["Brooklynn Abaroa",
+            "Kian Abbott",
+            "Hoda Abdalla",
+            "Aisha Abdelhamid",
+            "Amal Abdi",
+            "Hashem Abdou",
+            "Daniel Abdulah",
+            "Aweys Abdullatif",
+            "Caroline Abel",
+            "Benson Abercrombie",
+            "Nishmi Abeyweera",
+            "Christian Abney",
+            "Saadeldin Abouaish",
+            "Nour Abou-Hussein",
+            "Amitai Abouzaglo",
+            "Safia Abou-Zamzam",
+            "Daniel Abraham",
+            "David Abrahams",
+            "Nicholas Abruzzese",
+            "Elias Abu Nuwara",
+            "Lana Abuawad",
+            "Mohammed Abuelem",
+            "Josette Abugov"];
+
+        for (let course of courses) {
+            data.courses.push(course);
+            data.people[course] = [];
+            for (let person of people) {
+                data.people[course].push(person);
+            }
+        }
+
+        async function postData(data) {
+            // Default options are marked with *
+            const response = await fetch("/register", {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin      
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return await response
+        }
+
+        function sendDataToServer() {
+            let x = {
+                data: data
+            };
+
+            postData(x);
+        }
+
+        function fakescrape() {
+            sendDataToServer();
+        }
+    </script>
+</body>
+
+</html>

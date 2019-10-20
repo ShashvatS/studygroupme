@@ -12,6 +12,7 @@ import cookieParser = require('cookie-parser');
 
 import mainRoutes from './routes/main';
 import api from "./apis/api";
+import admin from "./routes/admin";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -38,8 +39,10 @@ for (let theModule of serveModules) {
 }
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/', mainRoutes);
+app.use('/admin', admin);
 app.use('/', api);
+app.use('/', mainRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

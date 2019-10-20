@@ -10,6 +10,7 @@ var cookieParser = require("cookie-parser");
 // import cors = require("cors");
 var main_1 = require("./routes/main");
 var api_1 = require("./apis/api");
+var admin_1 = require("./routes/admin");
 var app = express();
 var server = http.createServer(app);
 app.use(cors());
@@ -29,8 +30,9 @@ for (var _i = 0, serveModules_1 = constants_1.serveModules; _i < serveModules_1.
     app.use("/" + theModule, express.static(path.join(__dirname, "node_modules", theModule)));
 }
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/', main_1.default);
+app.use('/admin', admin_1.default);
 app.use('/', api_1.default);
+app.use('/', main_1.default);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

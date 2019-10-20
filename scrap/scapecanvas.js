@@ -7,7 +7,7 @@ async function postData(data) {
     // Default options are marked with *
     const response = await fetch("https://studygroupme.herokuapp.com/register", {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'no-cors', // no-cors, *cors, same-origin      
+      mode: 'cors', // no-cors, *cors, same-origin      
       headers: {
         'Content-Type': 'application/json'
       },
@@ -20,7 +20,7 @@ async function postData(data) {
 
 function sendDataToServer() {
     let x = {
-        theData: data
+       data: data
     };
 
     postData(x);

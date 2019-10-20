@@ -33,7 +33,7 @@ const client = new google.JWT(
 );
 
 
-router.get('/test2', async (req: express.Request, res: express.Response) => {
+router.get('/test2', (req: express.Request, res: express.Response) => {
     calendar.calendarList.list({
         auth: client
     }, (err, list) => {

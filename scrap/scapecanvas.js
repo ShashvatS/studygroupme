@@ -4,6 +4,12 @@ const data = {
 }
 
 function sendDataToServer() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "localhost:8000/register", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        data: data
+    }));
     console.log(data);
 }
 

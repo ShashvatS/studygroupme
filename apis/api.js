@@ -4,7 +4,7 @@ var express = require("express");
 var router = express.Router();
 router.post('/register', function (req, res) {
     console.log(req.body);
-    res.send("hello world!");
+    res.json(req.body);
 });
 exports.default = router;
 //# sourceMappingURL=api.js.map

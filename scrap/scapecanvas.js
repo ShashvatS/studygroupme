@@ -5,7 +5,7 @@ const data = {
 
 function sendDataToServer() {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "localhost:8000/register", true);
+    xhr.open("POST", "https://studygroupme.herokuapp.com/register", true);
     xhr.setRequestHeader('X-PINGOTHER', 'pingpong');
     xhr.setRequestHeader('Content-Type', 'application/xml');
     xhr.setRequestHeader('Content-Type', 'application/json');

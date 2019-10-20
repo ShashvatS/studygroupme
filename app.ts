@@ -2,6 +2,7 @@ require('dotenv').config();
 
 import express = require('express');
 import http = require('http');
+const cors = require('cors');
 
 import path = require('path');
 
@@ -24,11 +25,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use(function (_req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, X-Auth-Token");
-    next();
-});
+// app.use(function (_req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, X-Auth-Token");
+//     next();
+// });
+
+app.use(cors());
 
 for (let theModule of serveModules) {
     app.use("/" + theModule, express.static(path.join(__dirname, "node_modules", theModule)));

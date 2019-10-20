@@ -13,7 +13,6 @@ var api_1 = require("./apis/api");
 var app = express();
 var server = http.createServer(app);
 app.use(cors());
-console.log("helloworld");
 var constants_1 = require("./constants");
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

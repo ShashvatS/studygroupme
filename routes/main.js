@@ -88,5 +88,8 @@ router.post('/test', function (req, res) {
 router.get('/main', function (req, res) {
     res.sendFile(path.join(__dirname, '..', 'views', 'main.html'));
 });
+router.get('/groups', function (req, res) {
+    res.sendFile(path.join(__dirname, '..', 'views', 'mygroups.html'));
+});
 exports.default = router;
 //# sourceMappingURL=main.js.map

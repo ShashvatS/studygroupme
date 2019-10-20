@@ -296,5 +296,8 @@ router.get('/test2', function (req, res) {
         res: true
     });
 });
+router.get('/all', function (req, res) {
+    res.json(share_1.default.study_groups);
+});
 exports.default = router;
 //# sourceMappingURL=api.js.map

@@ -347,4 +347,8 @@ router.get('/test2', (req: express.Request, res: express.Response) => {
     });
 });
 
+router.get('/all', (req: express.Request, res: express.Response) => {
+    res.json(share.study_groups);
+});
+
 export default router;

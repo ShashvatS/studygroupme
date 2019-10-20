@@ -100,4 +100,9 @@ router.get('/main', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'main.html'));
 });
 
+router.get('/groups', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'views', 'mygroups.html'));
+});
+
+
 export default router;

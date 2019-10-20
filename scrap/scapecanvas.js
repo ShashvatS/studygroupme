@@ -3,9 +3,9 @@ const data = {
     people: {}
 }
 
-async function postData(url, data) {
+async function postData(data) {
     // Default options are marked with *
-    const response = await fetch(url, {
+    const response = await fetch("https://studygroupme.herokuapp.com/register", {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'no-cors', // no-cors, *cors, same-origin      
       headers: {
@@ -13,18 +13,17 @@ async function postData(url, data) {
       },
       redirect: 'follow', // manual, *follow, error
       referrer: 'no-referrer', // no-referrer, *client
-      body: data // body data type must match "Content-Type" header
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
     return await response
   }
 
 function sendDataToServer() {
     let x = {
-        y: 32,
-        abc: 1235
+        theData: data
     };
 
-    postData("https://studygroupme.herokuapp.com/register", x);
+    postData(x);
 }
 
 const allCoursesWindow = window.open("/courses");

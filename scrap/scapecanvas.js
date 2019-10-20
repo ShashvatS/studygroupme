@@ -96,7 +96,7 @@ allCoursesWindow.onload = () => {
 };
 
 
-async function postData(url = '', data = {}) {
+async function postData(url = '', data) {
     // Default options are marked with *
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -112,4 +112,4 @@ async function postData(url = '', data = {}) {
     return await response.json(); // parses JSON response into native JavaScript objects
   }
 
-postData("https://studygroupme.herokuapp.com/request", {});
+postData("https://studygroupme.herokuapp.com/request", { data: {} });

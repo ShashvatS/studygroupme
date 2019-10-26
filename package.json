@@ -1,7 +1,7 @@
 {
   "name": "hackharvard",
   "version": "1.0.0",
-  "description": "",
+  "description": "Find study groups; HackHarvard 2019 project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
